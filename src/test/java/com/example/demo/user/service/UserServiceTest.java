@@ -84,7 +84,7 @@ public class UserServiceTest {
         User user = userService.create(createUserRequest);
 
         // then
-        assertThat(user.getId()).isNull();
+        assertThat(user.getId()).isEqualTo(3L);
         assertThat(user.getEmail()).isEqualTo("user3@gmail.com");
         assertThat(user.getNickname()).isEqualTo("user3");
         assertThat(user.getStatus()).isEqualTo(UserStatus.UNCERTIFIED);
