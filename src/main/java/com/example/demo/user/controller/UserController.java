@@ -1,5 +1,6 @@
 package com.example.demo.user.controller;
 
+import com.example.demo.user.controller.port.UserService;
 import com.example.demo.user.controller.request.CreateUserRequest;
 import com.example.demo.user.controller.request.UpdateUserRequest;
 import com.example.demo.user.controller.request.VerifyUserRequest;
@@ -7,7 +8,6 @@ import com.example.demo.user.controller.response.CreateUserResponse;
 import com.example.demo.user.controller.response.GetUserResponse;
 import com.example.demo.user.controller.response.UpdateUserResponse;
 import com.example.demo.user.domain.User;
-import com.example.demo.user.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserServiceImpl userService;
+    private final UserService userService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<GetUserResponse> GetById(@PathVariable long id) {
+    public ResponseEntity<GetUserResponse> getById(@PathVariable long id) {
         userService.login(id);
         User user = userService.getById(id);
 

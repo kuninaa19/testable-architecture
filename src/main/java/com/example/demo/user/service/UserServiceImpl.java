@@ -2,6 +2,7 @@ package com.example.demo.user.service;
 
 import com.example.demo.common.service.port.ClockHolder;
 import com.example.demo.common.service.port.UuidHolder;
+import com.example.demo.user.controller.port.UserService;
 import com.example.demo.user.controller.request.CreateUserRequest;
 import com.example.demo.user.controller.request.UpdateUserRequest;
 import com.example.demo.user.controller.request.VerifyUserRequest;
@@ -15,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl {
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final CertificationService certificationService;
