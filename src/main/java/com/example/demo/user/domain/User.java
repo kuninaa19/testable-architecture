@@ -47,7 +47,7 @@ public class User {
                 .email(email)
                 .nickname(nickname)
                 .verificationCode(verificationCode)
-                .status(UserStatus.ACTIVATION)
+                .status(status)
                 .lastLoginAt(clockHolder.millis())
                 .build();
     }
