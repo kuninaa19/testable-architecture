@@ -7,6 +7,8 @@ import com.example.demo.user.controller.request.UpdateUserRequest;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.Objects;
+
 @Getter
 public class User {
     private final Long id;
@@ -70,5 +72,18 @@ public class User {
                 .verificationCode(uuidHolder.random())
                 .status(UserStatus.UNCERTIFIED)
                 .build();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id) && Objects.equals(email, user.email) && Objects.equals(nickname, user.nickname) && Objects.equals(verificationCode, user.verificationCode) && status == user.status && Objects.equals(lastLoginAt, user.lastLoginAt);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, email, nickname, verificationCode, status, lastLoginAt);
     }
 }
