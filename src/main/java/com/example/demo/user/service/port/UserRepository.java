@@ -6,9 +6,11 @@ import com.example.demo.user.domain.UserStatus;
 import java.util.Optional;
 
 public interface UserRepository {
-    Optional<User> findByIdAndStatus(long id, UserStatus status);
+    User getById(long id);
 
     Optional<User> findById(long id);
+
+    Optional<User> findByIdAndStatus(long id, UserStatus status);
 
     User save(User user);
 }
