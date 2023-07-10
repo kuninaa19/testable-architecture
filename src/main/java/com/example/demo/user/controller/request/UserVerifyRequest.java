@@ -5,11 +5,11 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class VerifyUserRequest {
+public class UserVerifyRequest {
     private final String verificationCode;
 
     @Builder
-    public VerifyUserRequest(@JsonProperty("verificationCode") String verificationCode) {
+    public UserVerifyRequest(@JsonProperty("verificationCode") String verificationCode) {
         this.verificationCode = verificationCode;
     }
 }

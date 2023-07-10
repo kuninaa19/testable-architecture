@@ -7,21 +7,19 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class UpdateUserResponse {
+public class UserGetResponse {
     private Long id;
     private String email;
     private String nickname;
-    private String verificationCode;
     private UserStatus status;
     private Long lastLoginAt;
 
-    public static UpdateUserResponse from(User user) {
-        return UpdateUserResponse.builder()
+    public static UserGetResponse from(User user) {
+        return UserGetResponse.builder()
                 .id(user.getId())
                 .email(user.getEmail())
                 .nickname(user.getNickname())
                 .status(user.getStatus())
-                .verificationCode(user.getVerificationCode())
                 .lastLoginAt(user.getLastLoginAt())
                 .build();
     }

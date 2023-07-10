@@ -1,7 +1,7 @@
 package com.example.demo.post.controller.response;
 
 import com.example.demo.post.domain.Post;
-import com.example.demo.user.controller.response.GetUserResponse;
+import com.example.demo.user.controller.response.UserGetResponse;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -16,7 +16,7 @@ public class PostCreateResponse {
 
     private Long createdAt;
 
-    private GetUserResponse writer;
+    private UserGetResponse writer;
 
     public static PostCreateResponse from(Post post) {
         return PostCreateResponse.builder()
@@ -24,7 +24,7 @@ public class PostCreateResponse {
                 .title(post.getTitle())
                 .text(post.getText())
                 .createdAt(post.getCreatedAt())
-                .writer(GetUserResponse.from(post.getUser()))
+                .writer(UserGetResponse.from(post.getUser()))
                 .build();
     }
 }

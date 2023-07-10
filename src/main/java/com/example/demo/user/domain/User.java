@@ -2,8 +2,8 @@ package com.example.demo.user.domain;
 
 import com.example.demo.common.service.port.ClockHolder;
 import com.example.demo.common.service.port.UuidHolder;
-import com.example.demo.user.controller.request.CreateUserRequest;
-import com.example.demo.user.controller.request.UpdateUserRequest;
+import com.example.demo.user.controller.request.UserCreateRequest;
+import com.example.demo.user.controller.request.UserUpdateRequest;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -54,21 +54,21 @@ public class User {
                 .build();
     }
 
-    public User update(UpdateUserRequest updateUserRequest) {
+    public User update(UserUpdateRequest userUpdateRequest) {
         return User.builder()
                 .id(id)
-                .email(updateUserRequest.getEmail())
-                .nickname(updateUserRequest.getNickname())
+                .email(userUpdateRequest.getEmail())
+                .nickname(userUpdateRequest.getNickname())
                 .verificationCode(verificationCode)
                 .status(status)
                 .lastLoginAt(lastLoginAt)
                 .build();
     }
 
-    public static User from(CreateUserRequest createUserRequest, UuidHolder uuidHolder) {
+    public static User from(UserCreateRequest userCreateRequest, UuidHolder uuidHolder) {
         return User.builder()
-                .email(createUserRequest.getEmail())
-                .nickname(createUserRequest.getNickname())
+                .email(userCreateRequest.getEmail())
+                .nickname(userCreateRequest.getNickname())
                 .verificationCode(uuidHolder.random())
                 .status(UserStatus.UNCERTIFIED)
                 .build();

@@ -5,9 +5,9 @@ import com.example.demo.mock.FakeUserRepository;
 import com.example.demo.mock.TestClockHolder;
 import com.example.demo.mock.TestUuidHolder;
 import com.example.demo.user.controller.port.UserService;
-import com.example.demo.user.controller.request.CreateUserRequest;
-import com.example.demo.user.controller.request.UpdateUserRequest;
-import com.example.demo.user.controller.request.VerifyUserRequest;
+import com.example.demo.user.controller.request.UserCreateRequest;
+import com.example.demo.user.controller.request.UserUpdateRequest;
+import com.example.demo.user.controller.request.UserVerifyRequest;
 import com.example.demo.user.domain.User;
 import com.example.demo.user.domain.UserStatus;
 import org.junit.jupiter.api.BeforeEach;
@@ -76,12 +76,12 @@ public class UserServiceTest {
     @Test
     void CreateUserRequest_로_유저를_생성할_수_있다() {
         // given
-        CreateUserRequest createUserRequest = CreateUserRequest.builder()
+        UserCreateRequest userCreateRequest = UserCreateRequest.builder()
                 .email("user3@gmail.com")
                 .nickname("user3").build();
 
         // when
-        User user = userService.create(createUserRequest);
+        User user = userService.create(userCreateRequest);
 
         // then
         assertThat(user.getId()).isEqualTo(3L);
@@ -105,12 +105,12 @@ public class UserServiceTest {
     @Test
     void 인증코드가_동일할때_유저_상태를_ACTIVATION_로_변경할_수_있다() {
         // given
-        VerifyUserRequest verifyUserRequest = VerifyUserRequest.builder()
+        UserVerifyRequest userVerifyRequest = UserVerifyRequest.builder()
                 .verificationCode("abcx")
                 .build();
 
         // when
-        userService.verify(1L, verifyUserRequest);
+        userService.verify(1L, userVerifyRequest);
 
         // then
         User user = userService.getById(1L);
@@ -120,27 +120,27 @@ public class UserServiceTest {
     @Test
     void 인증코드가_동일하지않을때_에러가_발생한다() {
         // given
-        VerifyUserRequest verifyUserRequest = VerifyUserRequest.builder()
+        UserVerifyRequest userVerifyRequest = UserVerifyRequest.builder()
                 .verificationCode("abcv")
                 .build();
 
         // when
         // then
         assertThatThrownBy(() -> {
-            userService.verify(1L, verifyUserRequest);
+            userService.verify(1L, userVerifyRequest);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void UpdateUserRequest_로_유저를_수정할_수_있다() {
         // given
-        UpdateUserRequest updateUserRequest = UpdateUserRequest.builder()
+        UserUpdateRequest userUpdateRequest = UserUpdateRequest.builder()
                 .email("update_user@gmail.com")
                 .nickname("updateUser")
                 .build();
 
         // when
-        User user = userService.update(1L, updateUserRequest);
+        User user = userService.update(1L, userUpdateRequest);
 
         // then
         assertThat(user.getId()).isEqualTo(1L);

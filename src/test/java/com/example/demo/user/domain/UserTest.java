@@ -2,8 +2,8 @@ package com.example.demo.user.domain;
 
 import com.example.demo.mock.TestClockHolder;
 import com.example.demo.mock.TestUuidHolder;
-import com.example.demo.user.controller.request.CreateUserRequest;
-import com.example.demo.user.controller.request.UpdateUserRequest;
+import com.example.demo.user.controller.request.UserCreateRequest;
+import com.example.demo.user.controller.request.UserUpdateRequest;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -15,7 +15,7 @@ public class UserTest {
     @Test
     void CreateUserRequest객체로_생성할_수_있다() {
         // given
-        CreateUserRequest createUserRequest = CreateUserRequest.builder()
+        UserCreateRequest userCreateRequest = UserCreateRequest.builder()
                 .email("user@gmail.com")
                 .nickname("user1")
                 .build();
@@ -23,7 +23,7 @@ public class UserTest {
         TestUuidHolder uuidHolder = new TestUuidHolder("abcx");
 
         // when
-        User user = User.from(createUserRequest, uuidHolder);
+        User user = User.from(userCreateRequest, uuidHolder);
 
         //then
         User expected = User.builder()
@@ -41,7 +41,7 @@ public class UserTest {
     @Test
     void UpdateUserRequest객체로_이메일과_닉네임을_수정할_수_있다() {
         // given
-        UpdateUserRequest updateUserRequest = UpdateUserRequest.builder()
+        UserUpdateRequest userUpdateRequest = UserUpdateRequest.builder()
                 .email("user2@gmail.com")
                 .nickname("user2")
                 .build();
@@ -56,7 +56,7 @@ public class UserTest {
                 .build();
 
         // when
-        user = user.update(updateUserRequest);
+        user = user.update(userUpdateRequest);
 
         // then
         User expected = User.builder()

@@ -1,12 +1,12 @@
 package com.example.demo.user.controller;
 
 import com.example.demo.user.controller.port.UserService;
-import com.example.demo.user.controller.request.CreateUserRequest;
-import com.example.demo.user.controller.request.UpdateUserRequest;
-import com.example.demo.user.controller.request.VerifyUserRequest;
-import com.example.demo.user.controller.response.CreateUserResponse;
-import com.example.demo.user.controller.response.GetUserResponse;
-import com.example.demo.user.controller.response.UpdateUserResponse;
+import com.example.demo.user.controller.request.UserCreateRequest;
+import com.example.demo.user.controller.request.UserUpdateRequest;
+import com.example.demo.user.controller.request.UserVerifyRequest;
+import com.example.demo.user.controller.response.UserCreateResponse;
+import com.example.demo.user.controller.response.UserGetResponse;
+import com.example.demo.user.controller.response.UserUpdateResponse;
 import com.example.demo.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,31 +21,31 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<GetUserResponse> getById(@PathVariable long id) {
+    public ResponseEntity<UserGetResponse> getById(@PathVariable long id) {
         userService.login(id);
         User user = userService.getById(id);
 
-        return ResponseEntity.ok().body(GetUserResponse.from(user));
+        return ResponseEntity.ok().body(UserGetResponse.from(user));
     }
 
     @PostMapping("/{id}/verify")
-    public ResponseEntity<Void> verify(@PathVariable long id, @RequestBody VerifyUserRequest verifyUserRequest) {
-        userService.verify(id, verifyUserRequest);
+    public ResponseEntity<Void> verify(@PathVariable long id, @RequestBody UserVerifyRequest userVerifyRequest) {
+        userService.verify(id, userVerifyRequest);
 
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("")
-    public ResponseEntity<CreateUserResponse> create(@RequestBody CreateUserRequest createUserRequest) {
-        User user = userService.create(createUserRequest);
+    public ResponseEntity<UserCreateResponse> create(@RequestBody UserCreateRequest userCreateRequest) {
+        User user = userService.create(userCreateRequest);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(CreateUserResponse.from(user));
+        return ResponseEntity.status(HttpStatus.CREATED).body(UserCreateResponse.from(user));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UpdateUserResponse> update(@PathVariable long id, @RequestBody UpdateUserRequest updateUserRequest) {
-        User user = userService.update(id, updateUserRequest);
+    public ResponseEntity<UserUpdateResponse> update(@PathVariable long id, @RequestBody UserUpdateRequest userUpdateRequest) {
+        User user = userService.update(id, userUpdateRequest);
 
-        return ResponseEntity.ok().body(UpdateUserResponse.from(user));
+        return ResponseEntity.ok().body(UserUpdateResponse.from(user));
     }
 }

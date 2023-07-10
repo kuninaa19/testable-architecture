@@ -3,9 +3,9 @@ package com.example.demo.user.service;
 import com.example.demo.common.service.port.ClockHolder;
 import com.example.demo.common.service.port.UuidHolder;
 import com.example.demo.user.controller.port.UserService;
-import com.example.demo.user.controller.request.CreateUserRequest;
-import com.example.demo.user.controller.request.UpdateUserRequest;
-import com.example.demo.user.controller.request.VerifyUserRequest;
+import com.example.demo.user.controller.request.UserCreateRequest;
+import com.example.demo.user.controller.request.UserUpdateRequest;
+import com.example.demo.user.controller.request.UserVerifyRequest;
 import com.example.demo.user.domain.User;
 import com.example.demo.user.domain.UserStatus;
 import com.example.demo.user.service.port.UserRepository;
@@ -28,8 +28,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    public User create(CreateUserRequest createUserRequest) {
-        User user = User.from(createUserRequest, uuidHolder);
+    public User create(UserCreateRequest userCreateRequest) {
+        User user = User.from(userCreateRequest, uuidHolder);
         user = userRepository.save(user);
         certificationService.send(user.getEmail(), "인증코드 발송 : " + user.getId(), user.getVerificationCode());
 
@@ -44,16 +44,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    public void verify(long id, VerifyUserRequest verifyUserRequest) {
+    public void verify(long id, UserVerifyRequest userVerifyRequest) {
         User user = userRepository.findById(id).orElseThrow(IllegalArgumentException::new);
-        user = user.verify(verifyUserRequest.getVerificationCode());
+        user = user.verify(userVerifyRequest.getVerificationCode());
         userRepository.save(user);
     }
 
     @Transactional
-    public User update(long id, UpdateUserRequest updateUserRequest) {
+    public User update(long id, UserUpdateRequest userUpdateRequest) {
         User user = userRepository.findById(id).orElseThrow(IllegalArgumentException::new);
-        user = user.update(updateUserRequest);
+        user = user.update(userUpdateRequest);
         return userRepository.save(user);
     }
 }
