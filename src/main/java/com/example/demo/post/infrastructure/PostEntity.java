@@ -1,12 +1,10 @@
 package com.example.demo.post.infrastructure;
 
-import com.example.demo.like.infrastructure.LikeEntity;
 import com.example.demo.post.domain.Post;
 import com.example.demo.user.infrasturcture.UserEntity;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "POST")
@@ -32,8 +30,9 @@ public class PostEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
-    private List<LikeEntity> likes;
+    @Basic(fetch = FetchType.LAZY)
+    @Formula("(SELECT count(1) FROM LIKES AS l WHERE l.post_id = id)")
+    private Long likeCount;
 
     public static PostEntity from(Post post) {
         PostEntity postEntity = new PostEntity();
@@ -43,7 +42,7 @@ public class PostEntity {
         postEntity.createdAt = post.getCreatedAt();
         postEntity.updatedAt = post.getUpdatedAt();
         postEntity.user = UserEntity.from(post.getUser());
-        postEntity.likes = post.getLikes().stream().map(LikeEntity::from).collect(Collectors.toList());
+        postEntity.likeCount = post.getLikeCount();
 
         return postEntity;
     }
@@ -56,7 +55,7 @@ public class PostEntity {
                 .createdAt(createdAt)
                 .updatedAt(updatedAt)
                 .user(user.toModel())
-                .likes(likes.stream().map(LikeEntity::toModel).collect(Collectors.toList()))
+                .likeCount(likeCount)
                 .build();
     }
 }

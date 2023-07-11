@@ -1,6 +1,5 @@
 package com.example.demo.post.controller.response;
 
-import com.example.demo.like.domain.LikeStatistics;
 import com.example.demo.post.domain.Post;
 import com.example.demo.user.controller.response.UserGetResponse;
 import lombok.Builder;
@@ -15,7 +14,7 @@ public class PostGetResponse {
     private Long createdAt;
     private Long updatedAt;
     private UserGetResponse writer;
-    private LikeStatistics likeStatistics;
+    private Long likeCount;
 
     public static PostGetResponse from(Post post) {
         return PostGetResponse.builder()
@@ -25,7 +24,7 @@ public class PostGetResponse {
                 .createdAt(post.getCreatedAt())
                 .updatedAt(post.getUpdatedAt())
                 .writer(UserGetResponse.from(post.getUser()))
-                .likeStatistics(LikeStatistics.from(post.getLikes()))
+                .likeCount(post.getLikeCount())
                 .build();
     }
 }

@@ -1,15 +1,11 @@
 package com.example.demo.post.domain;
 
 import com.example.demo.common.service.port.ClockHolder;
-import com.example.demo.like.domain.Like;
 import com.example.demo.post.controller.request.PostCreateRequest;
 import com.example.demo.post.controller.request.PostUpdateRequest;
 import com.example.demo.user.domain.User;
 import lombok.Builder;
 import lombok.Getter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 public class Post {
@@ -25,17 +21,17 @@ public class Post {
 
     private final User user;
 
-    private final List<Like> likes;
+    private final Long likeCount;
 
     @Builder
-    public Post(Long id, String title, String text, Long createdAt, Long updatedAt, User user, List<Like> likes) {
+    public Post(Long id, String title, String text, Long createdAt, Long updatedAt, User user, Long likeCount) {
         this.id = id;
         this.title = title;
         this.text = text;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.user = user;
-        this.likes = likes;
+        this.likeCount = likeCount;
     }
 
     public static Post from(PostCreateRequest postCreateRequest, User writer, ClockHolder clockHolder) {
@@ -44,12 +40,11 @@ public class Post {
                 .text(postCreateRequest.getText())
                 .user(writer)
                 .createdAt(clockHolder.millis())
-                .likes(new ArrayList<>())
                 .build();
     }
 
     public Post update(PostUpdateRequest postUpdateRequest, User writer, ClockHolder clockHolder) throws IllegalAccessException {
-        if(!user.equals(writer)){
+        if (!user.equals(writer)) {
             throw new IllegalAccessException("작성자가 아닙니다");
         }
 
@@ -60,7 +55,6 @@ public class Post {
                 .createdAt(createdAt)
                 .updatedAt(clockHolder.millis())
                 .user(user)
-                .likes(likes)
                 .build();
     }
 }
